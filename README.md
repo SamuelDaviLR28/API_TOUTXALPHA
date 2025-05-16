@@ -1,8 +1,20 @@
-# Toutbox Integration API
+# API Transportadora Parceira (SQLite)
 
-FastAPI para integração com Toutbox.
+## Requisitos
+- Python 3.9+
+- SQLite
+- FastAPI
 
-## Como rodar
-1. Configure o `.env`
-2. Instale as dependências
-3. Rode com `uvicorn app.main:app --reload`
+## Instalação
+
+```bash
+pip install -r requirements.txt
+```
+
+## Rodando o projeto
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Use o header `x-api-key` com a chave definida em `dependencies.py`.
