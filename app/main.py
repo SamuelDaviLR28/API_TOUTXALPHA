@@ -22,8 +22,9 @@ async def processar_pedido(db: AsyncSession, pedido: schemas.PedidoCreate):
 @app.post("/dispatch", dependencies=[Depends(verify_api_key)])
 async def post_dispatch(
     pedido: schemas.PedidoCreate,
-    db: AsyncSession = Depends(get_db),            
-    background_tasks: BackgroundTasks               
+    background_tasks: BackgroundTasks  
+    db: AsyncSession = Depends(get_db)         
+                  
 ):
     background_tasks.add_task(processar_pedido, db, pedido)
     return {"message": "Pedido recebido e será processado em segundo plano."}
