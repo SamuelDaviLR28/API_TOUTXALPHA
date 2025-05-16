@@ -22,7 +22,7 @@ async def processar_pedido(db: AsyncSession, pedido: schemas.PedidoCreate):
 @app.post("/dispatch", dependencies=[Depends(verify_api_key)])
 async def post_dispatch(
     pedido: schemas.PedidoCreate,
-    background_tasks: BackgroundTasks  
+    background_tasks: BackgroundTasks, 
     db: AsyncSession = Depends(get_db)         
                   
 ):
