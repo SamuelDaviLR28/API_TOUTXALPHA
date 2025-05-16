@@ -1,26 +1,28 @@
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
-from pathlib import Path
 import os
+import ssl
 
-# Carregar .env no módulo database
-env_path = Path(__file__).parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
+load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL não definido nas variáveis de ambiente (.env)")
 
-DATABASE_URL = DATABASE_URL.strip()
+ssl_context = ssl.create_default_context()
 
-# resto do seu código SQLAlchemy aqui...
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+# Engine com suporte a SSL
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=True,
+    connect_args={"ssl": ssl_context}
+)
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+    class_=AsyncSession
+)
+
 Base = declarative_base()
-
-def get_connection():
-    return SessionLocal()
