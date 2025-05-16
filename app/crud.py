@@ -12,5 +12,3 @@ async def criar_pedido(db: AsyncSession, pedido: schemas.PedidoCreate):
     await db.commit()
     await db.refresh(db_pedido)
     return db_pedido
-
-# Os outros métodos seriam implementados de forma semelhante
